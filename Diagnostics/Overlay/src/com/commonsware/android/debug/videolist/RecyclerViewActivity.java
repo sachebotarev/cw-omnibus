@@ -8,20 +8,29 @@
  OF ANY KIND, either express or implied. See the License for the specific
  language governing permissions and limitations under the License.
 
- From _The Busy Coder's Guide to Android Development_
+ Covered in detail in the book _The Busy Coder's Guide to Android Development_
  https://commonsware.com/Android
  */
 
 package com.commonsware.android.debug.videolist;
 
 import android.app.Activity;
+import android.os.Build;
+import android.provider.Settings;
 import android.support.v7.widget.RecyclerView;
 
 public class RecyclerViewActivity extends Activity {
   private RecyclerView rv=null;
 
   public void setAdapter(RecyclerView.Adapter adapter) {
-    if (BuildConfig.DEBUG) {
+    boolean canDrawOverlays=
+        (Build.VERSION.SDK_INT<=Build.VERSION_CODES.LOLLIPOP_MR1);
+
+    if (!canDrawOverlays) {
+      canDrawOverlays=Settings.canDrawOverlays(this);
+    }
+
+    if (BuildConfig.DEBUG && canDrawOverlays) {
       adapter=new TimingWrapper(adapter, this);
     }
 

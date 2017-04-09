@@ -7,8 +7,8 @@
   License is distributed on an "AS IS" BASIS,	WITHOUT	WARRANTIES OR CONDITIONS
   OF ANY KIND, either express or implied. See the License for the specific
   language governing permissions and limitations under the License.
-	
-  From _The Busy Coder's Guide to Android Development_
+  
+  Covered in detail in the book _The Busy Coder's Guide to Android Development_
     https://commonsware.com/Android
  */
 
@@ -60,10 +60,10 @@ public class ConstantsFragment extends ListFragment implements
 
     if (current==null) {
       db=new DatabaseHelper(getActivity());
-      task=new LoadCursorTask();
-      task.execute();
+      task=new LoadCursorTask().execute();
     }
   }
+
 
   @Override
   public void onDestroy() {
@@ -113,9 +113,9 @@ public class ConstantsFragment extends ListFragment implements
     values.put(DatabaseHelper.TITLE, title.getText().toString());
     values.put(DatabaseHelper.VALUE, value.getText().toString());
 
-    task=new InsertTask();
-    task.execute(values);
+    task=new InsertTask().execute(values);
   }
+
 
   abstract private class BaseTask<T> extends AsyncTask<T, Void, Cursor> {
     @Override
